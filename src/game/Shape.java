@@ -33,7 +33,7 @@ public class Shape {
         int[][] mV = new int[3][1]; //matrix with original v cords
         mV[0][0] = v[0];
         mV[1][0] = v[1];
-        mV[2][0] = v[2];
+        mV[2][0] = 0;
         int[][] mW = new int[3][1]; //matrix with cords after rotation
 
         double alpha = 0; //setting the rotation angle

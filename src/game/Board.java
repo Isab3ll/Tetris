@@ -6,19 +6,6 @@ import java.awt.event.KeyListener;
 
 public class Board extends JFrame {
 
-    /**
-     * Defining all the shapes
-     */
-    public static Shape[] shapes = {
-        new Shape(new int[][]{{0,0},{0,1},{0,2},{0,3}}), //|
-        new Shape(new int[][]{{0,0},{1,0},{2,0},{1,1}}), //T
-        new Shape(new int[][]{{0,0},{0,1},{0,2},{1,0}}), //L
-        new Shape(new int[][]{{0,0},{0,1},{0,2},{1,2}}), //upside L
-        new Shape(new int[][]{{0,0},{1,0},{1,1},{2,1}}), //zigzag 1
-        new Shape(new int[][]{{0,0},{0,1},{1,1},{1,2}}), //zigzag 2
-        new Shape(new int[][]{{0,0},{0,1},{1,0},{1,1}}), //square
-    };
-
     BoardGraphics graphics = new BoardGraphics();
 
     public Board() {

@@ -16,11 +16,28 @@ public class Shape {
 
     public Shape(int[][] cords) {
         this.cords = cords;
+    }
+
+    public Shape() {
         Random r = new Random();
+        this.cords = types[r.nextInt(7)];
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
-        this.x = 140;
+        this.x = 130;
         this.y = 0;
     }
+
+    /**
+     * Defining all possible shapes
+     */
+    public static int[][][] types = {
+            new int[][]{{0,0},{0,1},{0,2},{0,3}}, //|
+            new int[][]{{0,0},{1,0},{2,0},{1,1}}, //T
+            new int[][]{{0,0},{0,1},{0,2},{1,0}}, //L
+            new int[][]{{0,0},{0,1},{0,2},{1,2}}, //upside L
+            new int[][]{{0,0},{1,0},{1,1},{2,1}}, //zigzag 1
+            new int[][]{{0,0},{0,1},{1,1},{1,2}}, //zigzag 2
+            new int[][]{{0,0},{0,1},{1,0},{1,1}}, //square
+    };
 
     public void rotateLeft() {
         for(int i=0; i<cords.length; i++) {

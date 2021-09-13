@@ -4,13 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Random;
-import static game.Board.shapes;
 
 public class BoardGraphics extends JPanel implements ActionListener {
 
     Timer timer = new Timer(1, this);
-    Random random = new Random();
     int countdown = 20; //sets the game speed
     JLabel logo;
 
@@ -36,7 +33,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
         this.add(label);
          */
         timer.start();
-        currentShape = shapes[random.nextInt(7)];
+        currentShape = new Shape();
         onBoard.add(currentShape);
     }
 
@@ -46,11 +43,32 @@ public class BoardGraphics extends JPanel implements ActionListener {
         Graphics2D g2D = (Graphics2D) g;
         for(Shape shape: onBoard) {
             paintShape(g2D, shape);
-        }
 
-        if(currentShape.y == 420) {
-            currentShape = shapes[random.nextInt(7)];
-            onBoard.add(currentShape);
+            boolean onFloor = false;
+            int lowest = 0;
+            for(int i=0; i<4; i++) {
+                if(currentShape.getCords()[i][1]*10 + currentShape.y > lowest) {
+                    lowest = currentShape.getCords()[i][1]*10 + currentShape.y;
+                }
+            }
+            if(lowest==430) {
+                onFloor = true;
+                currentShape = new Shape();
+                onBoard.add(currentShape);
+            }
+
+            if(!onFloor) {
+                for(int i=0; i<4; i++) {
+                    for(int j=0; j<4; j++) {
+                        if(currentShape.getCords()[i][0]*10 +currentShape.x == shape.getCords()[i][0]*10 +shape.x
+                                && currentShape.getCords()[i][1]*10 +currentShape.y +20 == shape.getCords()[i][1]*10 +shape.y) {
+                            currentShape = new Shape();
+                            onBoard.add(currentShape);
+                        }
+                    }
+
+                }
+            }
         }
 
 //        todo some additional nice graphics
@@ -84,7 +102,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         countdown--;
         if(countdown == 0) {
-            countdown = 20 - onBoard.size(); //speeds up with each shape
+            countdown = 5;
             currentShape.down();
         }
         repaint();

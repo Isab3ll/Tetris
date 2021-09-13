@@ -5,12 +5,10 @@ import java.util.Random;
 
 public class Shape {
 
-    /**
-     * Table of coordinates for the shape
-     */
     public int[][] cords;
-
     public Color color;
+    public int x;
+    public int y;
 
     public int[][] getCords() {
         return cords;
@@ -20,6 +18,8 @@ public class Shape {
         this.cords = cords;
         Random r = new Random();
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
+        this.x = 140;
+        this.y = 0;
     }
 
     public void rotateLeft() {
@@ -32,6 +32,18 @@ public class Shape {
         for(int i=0; i<cords.length; i++) {
             cords[i] = rotateVertex(cords[i],1);
         }
+    }
+
+    public void moveLeft() {
+        this.x = x - 10;
+    }
+
+    public void moveRight() {
+        this.x = x + 10;
+    }
+
+    public void down() {
+        this.y = y + 10;
     }
 
     /**

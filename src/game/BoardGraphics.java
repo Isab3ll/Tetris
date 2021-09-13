@@ -3,6 +3,7 @@ package game;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Random;
 import static game.Board.shapes;
 
@@ -10,21 +11,20 @@ public class BoardGraphics extends JPanel implements ActionListener {
 
     Timer timer = new Timer(1, this);
     Random random = new Random();
-    JLabel label;
     int countdown = 20; //sets the game speed
-    int x=0, y=0;
+    JLabel logo;
+
+    ArrayList<Shape> onBoard = new ArrayList<>();
+    Shape currentShape;
 
     public void move(int direction) {
         switch(direction) {
-            case 0 -> x = x - 10;
-            case 1 -> x = x + 10;
-            case 2 -> shape.rotateLeft();
-            case 3 -> shape.rotateRight();
+            case 0 -> currentShape.moveLeft();
+            case 1 -> currentShape.moveRight();
+            case 2 -> currentShape.rotateLeft();
+            case 3 -> currentShape.rotateRight();
         }
     }
-
-    Shape shape;
-    //todo arraylist/bag to store all shapes on board
 
     public BoardGraphics() {
         /*
@@ -36,16 +36,22 @@ public class BoardGraphics extends JPanel implements ActionListener {
         this.add(label);
          */
         timer.start();
-
-        shape = shapes[random.nextInt(7)];
+        currentShape = shapes[random.nextInt(7)];
+        onBoard.add(currentShape);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.setBackground(Color.BLACK);
         Graphics2D g2D = (Graphics2D) g;
+        for(Shape shape: onBoard) {
+            paintShape(g2D, shape);
+        }
 
-        paintShape(g2D, shape);
+        if(currentShape.y == 420) {
+            currentShape = shapes[random.nextInt(7)];
+            onBoard.add(currentShape);
+        }
 
 //        todo some additional nice graphics
 
@@ -68,9 +74,9 @@ public class BoardGraphics extends JPanel implements ActionListener {
     private void paintShape(Graphics2D g2D, Shape shape) {
         for(int i=0; i<4; i++) {
             g2D.setColor(shape.color);
-            g2D.fillRect(shape.getCords()[i][0]*10 +x, shape.getCords()[i][1]*10 +y, 10,10);
+            g2D.fillRect(shape.getCords()[i][0]*10 +shape.x, shape.getCords()[i][1]*10 +shape.y, 10,10);
             g2D.setColor(Color.BLACK);
-            g2D.drawRect(shape.getCords()[i][0]*10 +x, shape.getCords()[i][1]*10 +y, 10,10);
+            g2D.drawRect(shape.getCords()[i][0]*10 +shape.x, shape.getCords()[i][1]*10 +shape.y, 10,10);
         }
     }
 
@@ -78,8 +84,8 @@ public class BoardGraphics extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         countdown--;
         if(countdown == 0) {
-            countdown = 20;
-            y = y + 10;
+            countdown = 20 - onBoard.size(); //speeds up with each shape
+            currentShape.down();
         }
         repaint();
     }

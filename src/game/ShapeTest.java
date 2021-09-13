@@ -16,6 +16,7 @@ class ShapeTest {
         shape.rotateLeft();
         assertArrayEquals(shape.cords,cordsAfter);
     }
+
     @org.junit.jupiter.api.Test
     void rotateRight1() {
         int[][] cordsBefore = {{0,0},{0,1}};
@@ -33,6 +34,7 @@ class ShapeTest {
         shape.rotateLeft();
         assertArrayEquals(shape.cords,cordsAfter);
     }
+
     @org.junit.jupiter.api.Test
     void rotateRight2() {
         int[][] cordsBefore = {{0,0},{0,1},{1,1}};

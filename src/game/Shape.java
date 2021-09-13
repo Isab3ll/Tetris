@@ -1,5 +1,8 @@
 package game;
 
+import java.awt.*;
+import java.util.Random;
+
 public class Shape {
 
     /**
@@ -7,8 +10,16 @@ public class Shape {
      */
     public int[][] cords;
 
+    public Color color;
+
+    public int[][] getCords() {
+        return cords;
+    }
+
     public Shape(int[][] cords) {
         this.cords = cords;
+        Random r = new Random();
+        this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
     }
 
     public void rotateLeft() {

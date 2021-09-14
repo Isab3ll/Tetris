@@ -64,9 +64,9 @@ public class BoardGraphics extends JPanel implements ActionListener {
             currentShape = new Shape();
         }
 
-        for(Shape shape: onBoard) {
-            boolean stop = false;
-            if(!onFloor) {
+        boolean stop = false;
+        if(!onFloor) {
+            for(Shape shape: onBoard) {
                 for(int i=0; i<4; i++) {
                     for(int j=0; j<4; j++) {
                         if (currentShape.getCords()[i][0]*10 + currentShape.x == shape.getCords()[j][0]*10 + shape.x
@@ -74,11 +74,12 @@ public class BoardGraphics extends JPanel implements ActionListener {
                             onBoard.add(currentShape);
                             currentShape = new Shape();
                             stop = true;
+                            break;
                         }
-                        if(stop) break;
                     }
                     if(stop) break;
                 }
+                if(stop) break;
             }
         }
     }

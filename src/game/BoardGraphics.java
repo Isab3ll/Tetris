@@ -8,12 +8,14 @@ import java.util.ArrayList;
 public class BoardGraphics extends JPanel implements ActionListener {
 
     Timer timer = new Timer(1, this);
-    int countdown = 20; //sets the game speed
-    JLabel logo;
-
+    int countdown = 20;
     ArrayList<Shape> onBoard = new ArrayList<>();
     Shape currentShape;
 
+    /**
+     * Moves and rotates blocks.
+     * @param direction type on a move
+     */
     public void move(int direction) {
         switch(direction) {
             case 0 -> currentShape.moveLeft();
@@ -24,14 +26,6 @@ public class BoardGraphics extends JPanel implements ActionListener {
     }
 
     public BoardGraphics() {
-        /*
-        //todo game logo
-        label = new JLabel(new ImageIcon("tetris.jpg"));
-        label.setSize(50,300);
-        label.setLocation(10,10);
-        this.setLayout(null);
-        this.add(label);
-         */
         timer.start();
         currentShape = new Shape();
     }
@@ -41,10 +35,17 @@ public class BoardGraphics extends JPanel implements ActionListener {
         this.setBackground(Color.BLACK);
         Graphics2D g2D = (Graphics2D) g;
 
+        g2D.setFont(new Font("Helvetica", Font.PLAIN,30));
+        g2D.setColor(Color.YELLOW);
+        g2D.drawString("Best",20,50);
+        g2D.setColor(Color.MAGENTA);
+        g2D.drawString("TETRIS",85,50);
+        g2D.setColor(Color.GREEN);
+        g2D.drawString("Ever",200,50);
         g2D.setColor(Color.WHITE);
-        g2D.fillRect(0,450,290,10);
-        g2D.fillRect(0,100,10,360);
-        g2D.fillRect(270,100,10,360);
+        g2D.fillRect(0,450,getWidth(),10);
+        g2D.fillRect(0,80,10,380);
+        g2D.fillRect(270,80,10,380);
         paintShape(g2D, currentShape);
         for(Shape shape: onBoard) {
             paintShape(g2D, shape);
@@ -80,28 +81,16 @@ public class BoardGraphics extends JPanel implements ActionListener {
                 }
             }
         }
-
-//        todo some additional nice graphics
-
-//        g2D.setColor(Color.MAGENTA);
-//        g2D.setStroke(new BasicStroke(20));
-//        g2D.drawLine(0,0,200,200);
-
-//        int[] xP = {50,100,150,225};
-//        int[] yP = {150,275,200,350};
-//        int nP = xP.length;
-//        g2D.setColor(Color.CYAN);
-//        g2D.drawPolyline(xP,yP,nP);
-
-//        g2D.setFont(new Font("Helvetica",Font.ITALIC,25));
-//        g2D.setColor(Color.RED);
-//        g2D.drawString("best tetris ever",100,100);
-
     }
 
+    /**
+     * Paints a single tetris block on board.
+     * @param g2D graphics
+     * @param shape block to paint
+     */
     private void paintShape(Graphics2D g2D, Shape shape) {
         for(int i=0; i<4; i++) {
-            g2D.setColor(shape.color);
+            g2D.setColor(shape.color.brighter());
             g2D.fillRect(shape.getCords()[i][0]*10 +shape.x, shape.getCords()[i][1]*10 +shape.y, 10,10);
             g2D.setColor(Color.BLACK);
             g2D.drawRect(shape.getCords()[i][0]*10 +shape.x, shape.getCords()[i][1]*10 +shape.y, 10,10);
@@ -112,7 +101,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         countdown--;
         if(countdown == 0) {
-            countdown = 5;
+            countdown = 5; //sets the game speed
             currentShape.down();
         }
         repaint();

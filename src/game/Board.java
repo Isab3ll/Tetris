@@ -10,9 +10,9 @@ public class Board extends JFrame {
 
     public Board() {
         this.setSize(295,500);
-        this.setLocationRelativeTo(null); //centering
+        this.setTitle("Best TETRIS Ever");
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
@@ -29,7 +29,6 @@ public class Board extends JFrame {
             @Override
             public void keyReleased(KeyEvent e) {}
         });
-
         this.add(graphics);
         this.setVisible(true);
     }

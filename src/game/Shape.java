@@ -18,6 +18,9 @@ public class Shape {
         this.cords = cords;
     }
 
+    /**
+     * Represents single block on the board.
+     */
     public Shape() {
         Random r = new Random();
         this.cords = types[r.nextInt(7)];
@@ -27,7 +30,7 @@ public class Shape {
     }
 
     /**
-     * Defining all possible shapes
+     * All possible shapes of blocks.
      */
     public static int[][][] types = {
             new int[][]{{0,0},{0,1},{0,2},{0,3}}, //|
@@ -39,18 +42,27 @@ public class Shape {
             new int[][]{{0,0},{0,1},{1,0},{1,1}}, //square
     };
 
+    /**
+     * Rotates the block in the left direction.
+     */
     public void rotateLeft() {
         for(int i=0; i<cords.length; i++) {
             cords[i] = rotateVertex(cords[i],0);
         }
     }
 
+    /**
+     * Rotates the block in the right direction.
+     */
     public void rotateRight() {
         for(int i=0; i<cords.length; i++) {
             cords[i] = rotateVertex(cords[i],1);
         }
     }
 
+    /**
+     * Moves the block left till the edge.
+     */
     public void moveLeft() {
         int leftEdge = 260;
         for(int i=0; i<4; i++) {
@@ -63,6 +75,9 @@ public class Shape {
         }
     }
 
+    /**
+     * Moves the block right till the edge.
+     */
     public void moveRight() {
         int rightEdge = 10;
         for(int i=0; i<4; i++) {
@@ -75,12 +90,15 @@ public class Shape {
         }
     }
 
+    /**
+     * Moves the block down
+     */
     public void down() {
         this.y = y + 10;
     }
 
     /**
-     * Rotates a single vertex about the origin (0,0)
+     * Rotates a single vertex about the origin (0,0).
      * @param v coordinates before the rotation
      * @param d direction - 0 if left, 1 if right
      * @return coordinates after the rotation

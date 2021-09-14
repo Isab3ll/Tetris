@@ -32,7 +32,7 @@ public class Shape {
     /**
      * All possible shapes of blocks.
      */
-    public static int[][][] types = {
+    public int[][][] types = {
             new int[][]{{0,0},{0,1},{0,2},{0,3}}, //|
             new int[][]{{0,0},{1,0},{2,0},{1,1}}, //T
             new int[][]{{0,0},{0,1},{0,2},{1,0}}, //L

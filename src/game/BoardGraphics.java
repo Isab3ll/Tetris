@@ -10,7 +10,9 @@ public class BoardGraphics extends JPanel implements ActionListener {
     Timer timer = new Timer(1, this);
     int countdown = 20;
     ArrayList<Shape> onBoard = new ArrayList<>();
+    boolean[][] full = new boolean[26][42];
     Shape currentShape;
+    int points = 0;
 
     /**
      * Moves and rotates blocks.
@@ -28,6 +30,11 @@ public class BoardGraphics extends JPanel implements ActionListener {
     public BoardGraphics() {
         timer.start();
         currentShape = new Shape();
+        for(int i=0; i<26; i++) {
+            for(int j=0; j<42; j++) {
+                full[i][j] = false;
+            }
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -50,6 +57,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
         for(Shape shape: onBoard) {
             paintShape(g2D, shape);
         }
+        //todo box of points
 
         boolean onFloor = false;
         int lowest = 0;
@@ -61,6 +69,11 @@ public class BoardGraphics extends JPanel implements ActionListener {
         if(lowest==440) {
             onFloor = true;
             onBoard.add(currentShape);
+            for(int k=0; k<4; k++) {
+                int x = currentShape.getCords()[k][0] + currentShape.x%10 - 1;
+                int y = currentShape.getCords()[k][1] + currentShape.y%10;
+                full[x][y] = true;
+            }
             currentShape = new Shape();
         }
 
@@ -72,6 +85,11 @@ public class BoardGraphics extends JPanel implements ActionListener {
                         if (currentShape.getCords()[i][0]*10 + currentShape.x == shape.getCords()[j][0]*10 + shape.x
                                 && currentShape.getCords()[i][1]*10 + currentShape.y + 10 == shape.getCords()[j][1]*10 + shape.y) {
                             onBoard.add(currentShape);
+                            for(int k=0; k<4; k++) {
+                                int x = currentShape.getCords()[k][0] + currentShape.x%10 - 1;
+                                int y = currentShape.getCords()[k][1] + currentShape.y%10;
+                                full[x][y] = true;
+                            }
                             currentShape = new Shape();
                             stop = true;
                             break;
@@ -96,6 +114,14 @@ public class BoardGraphics extends JPanel implements ActionListener {
             g2D.setColor(Color.BLACK);
             g2D.drawRect(shape.getCords()[i][0]*10 +shape.x, shape.getCords()[i][1]*10 +shape.y, 10,10);
         }
+    }
+
+    /**
+     * Removes full lines and counts points.
+     */
+    public static void checkLines() {
+        //todo searching for full lines and removing them
+        //todo counting points
     }
 
     @Override

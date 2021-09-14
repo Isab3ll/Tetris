@@ -52,11 +52,27 @@ public class Shape {
     }
 
     public void moveLeft() {
-        this.x = x - 10;
+        int leftEdge = 260;
+        for(int i=0; i<4; i++) {
+            if(this.cords[i][0]*10 + this.x < leftEdge) {
+                leftEdge = this.cords[i][0]*10 + this.x;
+            }
+        }
+        if(leftEdge>10) {
+            this.x = x - 10;
+        }
     }
 
     public void moveRight() {
-        this.x = x + 10;
+        int rightEdge = 10;
+        for(int i=0; i<4; i++) {
+            if(this.cords[i][0]*10 + this.x > rightEdge) {
+                rightEdge = this.cords[i][0]*10 + this.x;
+            }
+        }
+        if(rightEdge<260) {
+            this.x = x + 10;
+        }
     }
 
     public void down() {

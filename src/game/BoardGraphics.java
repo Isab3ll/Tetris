@@ -34,39 +34,49 @@ public class BoardGraphics extends JPanel implements ActionListener {
          */
         timer.start();
         currentShape = new Shape();
-        onBoard.add(currentShape);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.setBackground(Color.BLACK);
         Graphics2D g2D = (Graphics2D) g;
+
+        g2D.setColor(Color.WHITE);
+        g2D.fillRect(0,450,290,10);
+        g2D.fillRect(0,100,10,360);
+        g2D.fillRect(270,100,10,360);
+        paintShape(g2D, currentShape);
         for(Shape shape: onBoard) {
             paintShape(g2D, shape);
+        }
 
-            boolean onFloor = false;
-            int lowest = 0;
-            for(int i=0; i<4; i++) {
-                if(currentShape.getCords()[i][1]*10 + currentShape.y > lowest) {
-                    lowest = currentShape.getCords()[i][1]*10 + currentShape.y;
-                }
+        boolean onFloor = false;
+        int lowest = 0;
+        for(int i=0; i<4; i++) {
+            if(currentShape.getCords()[i][1]*10 + currentShape.y > lowest) {
+                lowest = currentShape.getCords()[i][1]*10 + currentShape.y;
             }
-            if(lowest==430) {
-                onFloor = true;
-                currentShape = new Shape();
-                onBoard.add(currentShape);
-            }
+        }
+        if(lowest==440) {
+            onFloor = true;
+            onBoard.add(currentShape);
+            currentShape = new Shape();
+        }
 
+        for(Shape shape: onBoard) {
+            boolean stop = false;
             if(!onFloor) {
                 for(int i=0; i<4; i++) {
                     for(int j=0; j<4; j++) {
-                        if(currentShape.getCords()[i][0]*10 +currentShape.x == shape.getCords()[i][0]*10 +shape.x
-                                && currentShape.getCords()[i][1]*10 +currentShape.y +20 == shape.getCords()[i][1]*10 +shape.y) {
-                            currentShape = new Shape();
+                        if (currentShape.getCords()[i][0]*10 + currentShape.x == shape.getCords()[j][0]*10 + shape.x
+                                && currentShape.getCords()[i][1]*10 + currentShape.y + 10 == shape.getCords()[j][1]*10 + shape.y) {
                             onBoard.add(currentShape);
+                            currentShape = new Shape();
+                            stop = true;
                         }
+                        if(stop) break;
                     }
-
+                    if(stop) break;
                 }
             }
         }

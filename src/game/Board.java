@@ -9,7 +9,7 @@ public class Board extends JFrame {
     BoardGraphics graphics = new BoardGraphics();
 
     public Board() {
-        this.setSize(300,500);
+        this.setSize(295,500);
         this.setLocationRelativeTo(null); //centering
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

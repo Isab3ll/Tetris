@@ -1,4 +1,4 @@
-package game;
+import game.Shape;
 
 import static org.junit.jupiter.api.Assertions.*;
 

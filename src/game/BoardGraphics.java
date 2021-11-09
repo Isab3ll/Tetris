@@ -86,6 +86,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
             }
         }
 
+        //saving current cords of all blocks on board
         for(int i=0; i<42; i++) {
             for(int j=0; j<26; j++) {
                 full[i][j] = false;
@@ -140,7 +141,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         countdown--;
         if(countdown == 0) {
-            countdown = 10; //sets the game speed
+            countdown = 5; //sets the game speed
             currentShape.down();
         }
         repaint();

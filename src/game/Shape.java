@@ -23,7 +23,10 @@ public class Shape {
      */
     public Shape() {
         Random r = new Random();
+
         this.cords = types[r.nextInt(7)];
+        //this.cords = types[0];
+
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
         this.x = 130;
         this.y = 0;

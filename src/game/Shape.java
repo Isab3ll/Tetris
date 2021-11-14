@@ -34,8 +34,8 @@ public class Shape {
         //this.cords = types[0]; for debug
 
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
-        this.x = 10*(scale-1)/2;
-        this.y = 0;
+        this.x = 10*scale/2;
+        this.y = scale;
         updatePosition();
     }
 
@@ -43,12 +43,12 @@ public class Shape {
      * All possible shapes of blocks.
      */
     public int[][][] types = {
-            new int[][]{{0,0},{0,1},{0,2},{0,3}}, //|
-            new int[][]{{0,0},{1,0},{2,0},{1,1}}, //T
-            new int[][]{{0,0},{0,1},{0,2},{1,0}}, //L
-            new int[][]{{0,0},{0,1},{0,2},{1,2}}, //upside L
-            new int[][]{{0,0},{1,0},{1,1},{2,1}}, //zigzag 1
-            new int[][]{{0,0},{0,1},{1,1},{1,2}}, //zigzag 2
+            new int[][]{{0,-2},{0,-1},{0,0},{0,1}}, //|
+            new int[][]{{0,0},{-1,0},{1,0},{0,1}}, //T
+            new int[][]{{0,0},{1,0},{-1,0},{-1,1}}, //L
+            new int[][]{{0,0},{1,0},{-1,0},{1,1}}, //upside L
+            new int[][]{{0,0},{-1,0},{0,1},{1,1}}, //zigzag 1
+            new int[][]{{0,0},{0,-1},{1,0},{1,1}}, //zigzag 2
             new int[][]{{0,0},{0,1},{1,0},{1,1}}, //square
     };
 

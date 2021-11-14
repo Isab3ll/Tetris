@@ -8,8 +8,10 @@ public class Board extends JFrame {
 
     BoardGraphics graphics = new BoardGraphics();
 
+    protected static int scale = 30;
+
     public Board() {
-        this.setSize(295,500);
+        this.setSize(12*scale +16,22*scale +39);
         this.setTitle("Best TETRIS Ever");
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

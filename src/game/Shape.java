@@ -2,6 +2,7 @@ package game;
 
 import java.awt.*;
 import java.util.Random;
+import static game.Board.scale;
 
 public class Shape {
 
@@ -25,10 +26,10 @@ public class Shape {
         Random r = new Random();
 
         this.cords = types[r.nextInt(7)];
-        //this.cords = types[0];
+        //this.cords = types[0]; for debug
 
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
-        this.x = 130;
+        this.x = 10*(scale-1)/2;
         this.y = 0;
     }
 
@@ -67,14 +68,14 @@ public class Shape {
      * Moves the block left till the edge.
      */
     public void moveLeft() {
-        int leftEdge = 260;
+        int leftEdge = BoardGraphics.width+scale;
         for(int i=0; i<4; i++) {
-            if(this.cords[i][0]*10 + this.x < leftEdge) {
-                leftEdge = this.cords[i][0]*10 + this.x;
+            if(this.cords[i][0]*scale + this.x < leftEdge) {
+                leftEdge = this.cords[i][0]*scale + this.x;
             }
         }
-        if(leftEdge>10) {
-            this.x = x - 10;
+        if(leftEdge>scale) {
+            this.x = x - scale;
         }
     }
 
@@ -82,14 +83,14 @@ public class Shape {
      * Moves the block right till the edge.
      */
     public void moveRight() {
-        int rightEdge = 10;
+        int rightEdge = 0;
         for(int i=0; i<4; i++) {
-            if(this.cords[i][0]*10 + this.x > rightEdge) {
-                rightEdge = this.cords[i][0]*10 + this.x;
+            if(this.cords[i][0]*scale + this.x > rightEdge) {
+                rightEdge = this.cords[i][0]*scale + this.x;
             }
         }
-        if(rightEdge<260) {
-            this.x = x + 10;
+        if(rightEdge<BoardGraphics.width-3*scale) {
+            this.x = x + scale;
         }
     }
 

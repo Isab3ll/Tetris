@@ -6,13 +6,18 @@ import static game.Board.scale;
 
 public class Shape {
 
-    public int[][] cords;
     public Color color;
-    public int x;
-    public int y;
+    public int[][] cords; //to rotate
+    public int x; //to move left and right
+    public int y; //to move down
+    public int[][] position = new int[4][2];;
 
     public int[][] getCords() {
         return cords;
+    }
+
+    public int[][] getPosition() {
+        return position;
     }
 
     public Shape(int[][] cords) {
@@ -31,6 +36,7 @@ public class Shape {
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
         this.x = 10*(scale-1)/2;
         this.y = 0;
+        updatePosition();
     }
 
     /**
@@ -50,8 +56,19 @@ public class Shape {
      * Rotates the block in the left direction.
      */
     public void rotateLeft() {
+        int[][] afterRotation = new int[4][2];
+        boolean correct = true;
         for(int i=0; i<cords.length; i++) {
-            cords[i] = rotateVertex(cords[i],0);
+            afterRotation[i] = rotateVertex(cords[i],0);
+            if(afterRotation[i][0]*scale + x < scale ||
+                    afterRotation[i][1]*scale + y > BoardGraphics.width-2*scale) {
+                correct = false;
+                break;
+            }
+        }
+        if(correct) {
+            cords = afterRotation;
+            updatePosition();
         }
     }
 
@@ -59,8 +76,19 @@ public class Shape {
      * Rotates the block in the right direction.
      */
     public void rotateRight() {
+        int[][] afterRotation = new int[4][2];
+        boolean correct = true;
         for(int i=0; i<cords.length; i++) {
-            cords[i] = rotateVertex(cords[i],1);
+            afterRotation[i] = rotateVertex(cords[i],1);
+            if(afterRotation[i][0]*scale + x < scale ||
+                    afterRotation[i][1]*scale + y > BoardGraphics.width-2*scale) {
+                correct = false;
+                break;
+            }
+        }
+        if(correct) {
+            cords = afterRotation;
+            updatePosition();
         }
     }
 
@@ -70,13 +98,14 @@ public class Shape {
     public void moveLeft() {
         int leftEdge = BoardGraphics.width+scale;
         for(int i=0; i<4; i++) {
-            if(this.cords[i][0]*scale + this.x < leftEdge) {
-                leftEdge = this.cords[i][0]*scale + this.x;
+            if(this.position[i][0]*scale < leftEdge) {
+                leftEdge = this.position[i][0]*scale;
             }
         }
         if(leftEdge>scale) {
             this.x = x - scale;
         }
+        updatePosition();
     }
 
     /**
@@ -85,20 +114,32 @@ public class Shape {
     public void moveRight() {
         int rightEdge = 0;
         for(int i=0; i<4; i++) {
-            if(this.cords[i][0]*scale + this.x > rightEdge) {
-                rightEdge = this.cords[i][0]*scale + this.x;
+            if(this.position[i][0]*scale > rightEdge) {
+                rightEdge = this.position[i][0]*scale ;
             }
         }
-        if(rightEdge<BoardGraphics.width-3*scale) {
+        if(rightEdge<BoardGraphics.width-2*scale) {
             this.x = x + scale;
         }
+        updatePosition();
     }
 
     /**
-     * Moves the block down
+     * Moves the block down.
      */
     public void down() {
-        this.y = y + 10;
+        this.y = y + 5;
+        updatePosition();
+    }
+
+    /**
+     * Saves current position of the block.
+     */
+    private void updatePosition() {
+        for(int i=0; i<4; i++) {
+            this.position[i][0] = cords[i][0] + x/scale;
+            this.position[i][1] = cords[i][1] + y/scale;
+        }
     }
 
     /**

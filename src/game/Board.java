@@ -11,7 +11,7 @@ public class Board extends JFrame {
     protected static int scale = 30;
 
     public Board() {
-        this.setSize(12*scale +16,22*scale +39);
+        this.setSize(12*scale +16, 22*scale);
         this.setTitle("Best TETRIS Ever");
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

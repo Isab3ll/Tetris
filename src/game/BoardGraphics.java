@@ -11,7 +11,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     /**
      * Sets the game speed (bigger number equals slower game).
      */
-    static int speed = 4;
+    static int speed = 2;
 
     protected static int width;
     protected static int height;
@@ -55,10 +55,12 @@ public class BoardGraphics extends JPanel implements ActionListener {
             blockIsSet = blockOnBlock();
         }
         else blockIsSet = true;
-
         if(blockIsSet) {
             saveBoard();
             checkLines();
+        }
+        if(gameOver()) {
+            showSummary();
         }
     }
 
@@ -82,9 +84,9 @@ public class BoardGraphics extends JPanel implements ActionListener {
      */
     private void paintBoard(Graphics2D g2D) {
         g2D.setColor(Color.WHITE);
-        g2D.fillRect(0, getHeight()-scale+10, getWidth()*scale-10, scale);
-        g2D.fillRect(0, 0, scale, getHeight()*scale);
-        g2D.fillRect(getWidth()-scale+1, 0, scale, getHeight()*scale);
+        g2D.fillRect(0, height-scale+10, width*scale-10, scale);
+        g2D.fillRect(0, 0, scale, height*scale);
+        g2D.fillRect(width-scale+1, 0, scale, height*scale);
         paintShape(g2D, currentShape);
         for(Shape shape: onBoard) {
             paintShape(g2D, shape);
@@ -103,7 +105,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
                 lowest = currentShape.getPosition()[i][1]*scale;
             }
         }
-        if(lowest>height-2*scale) {
+        if(lowest > height-2*scale) {
             onBoard.add(currentShape);
             currentShape = new Shape();
             return true;
@@ -117,8 +119,8 @@ public class BoardGraphics extends JPanel implements ActionListener {
      */
     private boolean blockOnBlock() {
         for(Shape shape : onBoard) {
-            for(int i=0; i< currentShape.getPosition().length; i++) {
-                for(int j=0; j< shape.getPosition().length; j++) {
+            for(int i=0; i<currentShape.getPosition().length; i++) {
+                for(int j=0; j<shape.getPosition().length; j++) {
                     if (currentShape.getPosition()[i][0] * scale == shape.getPosition()[j][0] * scale
                             && currentShape.getPosition()[i][1] * scale + scale == shape.getPosition()[j][1] * scale) {
                         onBoard.add(currentShape);
@@ -163,7 +165,8 @@ public class BoardGraphics extends JPanel implements ActionListener {
             }
             if(fullRow) {
                 removeRow(i);
-                //todo counting points
+                saveBoard();
+                points += 1;
             }
         }
     }
@@ -193,7 +196,6 @@ public class BoardGraphics extends JPanel implements ActionListener {
                 onBoard.set(k, shape);
             }
         }
-        saveBoard();
         rowsDown(rowNumber);
     }
 
@@ -213,6 +215,27 @@ public class BoardGraphics extends JPanel implements ActionListener {
             shape.setPosition(newPosition);
             onBoard.set(k, shape);
         }
+    }
+
+    /**
+     * Checks if player lost the game.
+     * @return true if the game is over
+     */
+    private boolean gameOver() {
+        for(int x=0; x<full[0].length; x++) {
+            if(full[0][x]) {
+                System.out.println("Game Over");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Shows summary after the game is over.
+     */
+    private void showSummary() {
+        //todo print summary
     }
 
     @Override

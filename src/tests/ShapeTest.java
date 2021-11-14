@@ -14,7 +14,7 @@ class ShapeTest {
         int[][] cordsAfter = {{0,0},{-1,0}};
         Shape shape = new Shape(cordsBefore);
         shape.rotateLeft();
-        assertArrayEquals(shape.cords,cordsAfter);
+        assertArrayEquals(shape.getCords(),cordsAfter);
     }
 
     @org.junit.jupiter.api.Test
@@ -23,7 +23,7 @@ class ShapeTest {
         int[][] cordsAfter = {{0,0},{1,0}};
         Shape shape = new Shape(cordsBefore);
         shape.rotateRight();
-        assertArrayEquals(shape.cords,cordsAfter);
+        assertArrayEquals(shape.getCords(),cordsAfter);
     }
 
     @org.junit.jupiter.api.Test
@@ -32,7 +32,7 @@ class ShapeTest {
         int[][] cordsAfter = {{0,0},{-1,0},{-1,1}};
         Shape shape = new Shape(cordsBefore);
         shape.rotateLeft();
-        assertArrayEquals(shape.cords,cordsAfter);
+        assertArrayEquals(shape.getCords(),cordsAfter);
     }
 
     @org.junit.jupiter.api.Test
@@ -41,6 +41,6 @@ class ShapeTest {
         int[][] cordsAfter = {{0,0},{1,0},{1,-1}};
         Shape shape = new Shape(cordsBefore);
         shape.rotateRight();
-        assertArrayEquals(shape.cords,cordsAfter);
+        assertArrayEquals(shape.getCords(),cordsAfter);
     }
 }

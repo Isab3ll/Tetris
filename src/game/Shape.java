@@ -6,18 +6,24 @@ import static game.Board.scale;
 
 public class Shape {
 
-    public Color color;
-    public int[][] cords; //to rotate
-    public int x; //to move left and right
-    public int y; //to move down
-    public int[][] position = new int[4][2];;
+    private Color color;
+    private int[][] cords; //to rotate
+    private int x; //to move left and right
+    private int y; //to move down
+    private int[][] position = new int[4][2];;
 
-    public int[][] getCords() {
-        return cords;
+    public void setPosition(int[][] position) {
+        this.position = position;
     }
 
     public int[][] getPosition() {
         return position;
+    }
+    public Color getColor() {
+        return color;
+    }
+    public int[][] getCords() {
+        return cords;
     }
 
     public Shape(int[][] cords) {
@@ -31,7 +37,7 @@ public class Shape {
         Random r = new Random();
 
         this.cords = types[r.nextInt(7)];
-        //this.cords = types[0]; for debug
+        //this.cords = types[0]; //for debug
 
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
         this.x = 10*scale/2;
@@ -128,7 +134,7 @@ public class Shape {
      * Moves the block down.
      */
     public void down() {
-        this.y = y + 5;
+        this.y = y + 10;
         updatePosition();
     }
 
@@ -136,7 +142,7 @@ public class Shape {
      * Saves current position of the block.
      */
     private void updatePosition() {
-        for(int i=0; i<4; i++) {
+        for(int i=0; i< position.length; i++) {
             this.position[i][0] = cords[i][0] + x/scale;
             this.position[i][1] = cords[i][1] + y/scale;
         }
@@ -155,7 +161,7 @@ public class Shape {
         mV[2][0] = 0;
         int[][] mW = new int[3][1]; //matrix with cords after rotation
 
-        double alpha = 0; //setting the rotation angle
+        double alpha; //setting the rotation angle
         if(d==0) alpha = Math.PI/2;
         else if(d==1) alpha = - Math.PI/2;
         else throw new IllegalArgumentException("Direction not allowed");

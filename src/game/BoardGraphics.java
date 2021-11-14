@@ -11,7 +11,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     /**
      * Sets the game speed (bigger number equals slower game).
      */
-    static int speed = 2;
+    static int speed = 4;
 
     protected static int width;
     protected static int height;
@@ -68,8 +68,8 @@ public class BoardGraphics extends JPanel implements ActionListener {
      * @param shape block to paint
      */
     private void paintShape(Graphics2D g2D, Shape shape) {
-        for(int i=0; i<4; i++) {
-            g2D.setColor(shape.color.brighter());
+        for(int i=0; i<shape.getPosition().length; i++) {
+            g2D.setColor(shape.getColor().brighter());
             g2D.fillRect(shape.getPosition()[i][0]*scale, shape.getPosition()[i][1]*scale, scale, scale);
             g2D.setColor(Color.BLACK);
             g2D.drawRect(shape.getPosition()[i][0]*scale, shape.getPosition()[i][1]*scale, scale, scale);
@@ -98,7 +98,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
      */
     private boolean blockOnFloor() {
         int lowest = 0;
-        for(int i=0; i<4; i++) {
+        for(int i=0; i<currentShape.getPosition().length; i++) {
             if(currentShape.getPosition()[i][1]*scale > lowest) {
                 lowest = currentShape.getPosition()[i][1]*scale;
             }
@@ -117,8 +117,8 @@ public class BoardGraphics extends JPanel implements ActionListener {
      */
     private boolean blockOnBlock() {
         for(Shape shape : onBoard) {
-            for(int i = 0; i < 4; i++) {
-                for(int j = 0; j < 4; j++) {
+            for(int i=0; i< currentShape.getPosition().length; i++) {
+                for(int j=0; j< shape.getPosition().length; j++) {
                     if (currentShape.getPosition()[i][0] * scale == shape.getPosition()[j][0] * scale
                             && currentShape.getPosition()[i][1] * scale + scale == shape.getPosition()[j][1] * scale) {
                         onBoard.add(currentShape);
@@ -141,7 +141,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
             }
         }
         for(Shape shape: onBoard) {
-            for(int k=0; k<4; k++) {
+            for(int k=0; k<shape.getPosition().length; k++) {
                 int x = shape.getPosition()[k][0];
                 int y = shape.getPosition()[k][1];
                 full[y+1][x-1] = true;
@@ -152,7 +152,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     /**
      * Removes full lines and counts points.
      */
-    public static void checkLines() {
+    public void checkLines() {
         for(int i=0; i<full.length; i++) {
             boolean fullRow = true;
             for(int j=0; j<full[0].length; j++) {
@@ -162,11 +162,56 @@ public class BoardGraphics extends JPanel implements ActionListener {
                 }
             }
             if(fullRow) {
-                System.out.println("FULL");
-
-                //todo removing full row
+                removeRow(i);
                 //todo counting points
             }
+        }
+    }
+
+    /**
+     * Removes given row from the board.
+     * @param rowNumber number of the full row to remove
+     */
+    private void removeRow(int rowNumber) {
+        for(int k=0; k<onBoard.size(); k++) {
+            Shape shape = onBoard.get(k);
+            ArrayList<int[]> correctCords = new ArrayList<>();
+            for(int i=0; i<shape.getPosition().length; i++){
+                int x = shape.getPosition()[i][0];
+                int y = shape.getPosition()[i][1];
+                if(y+1 != rowNumber) {
+                    correctCords.add(new int[]{x,y});
+                }
+            }
+            int cellsLeft = correctCords.size();
+            if(cellsLeft != shape.getPosition().length) {
+                int[][] newPosition = new int[cellsLeft][2];
+                for(int i=0; i<cellsLeft; i++) {
+                    newPosition[i] = correctCords.get(i);
+                }
+                shape.setPosition(newPosition);
+                onBoard.set(k, shape);
+            }
+        }
+        saveBoard();
+        rowsDown(rowNumber);
+    }
+
+    /**
+     * Moves all the left rows down after removing full row.
+     * @param fromRow number of previously removed row
+     */
+    private void rowsDown(int fromRow) {
+        for(int k=0; k<onBoard.size(); k++) {
+            Shape shape = onBoard.get(k);
+            int[][] newPosition = shape.getPosition();
+            for(int i=0; i<newPosition.length; i++) {
+                if(newPosition[i][1] < fromRow) {
+                    newPosition[i][1] += 1;
+                }
+            }
+            shape.setPosition(newPosition);
+            onBoard.set(k, shape);
         }
     }
 

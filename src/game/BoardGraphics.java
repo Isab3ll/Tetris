@@ -11,7 +11,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     /**
      * Sets the game speed (bigger number equals slower game).
      */
-    static int speed = 10;
+    static int speed = 30;
 
     protected static int width;
     protected static int height;
@@ -174,11 +174,13 @@ public class BoardGraphics extends JPanel implements ActionListener {
                 removeRow(i);
                 saveBoard();
                 combo++;
-                speed -= 1;
             }
         }
-        if(combo == 4) points += combo*2;
-        else points += combo;
+        if(combo > 0) {
+            if(combo == 4) points += combo*2;
+            else points += combo;
+            speed -= 1;
+        }
     }
 
     /**
@@ -252,11 +254,11 @@ public class BoardGraphics extends JPanel implements ActionListener {
 
         g2D.setColor(Color.RED);
         g2D.setFont(new Font("Console", Font.PLAIN, 30));
-        g2D.drawString("GAME OVER", 90, 70);
+        g2D.drawString("GAME OVER", 90, 150);
 
         g2D.setColor(Color.WHITE);
         g2D.setFont(new Font("Console", Font.PLAIN, 20));
-        g2D.drawString("Your score: "+points, 120, 100);
+        g2D.drawString("Your score: "+points, 120, 180);
 
         g2D.dispose();
     }

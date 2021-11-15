@@ -48,7 +48,7 @@ public class Shape {
     /**
      * All possible shapes of blocks.
      */
-    public int[][][] types = {
+    private final int[][][] types = {
             new int[][]{{0,-2},{0,-1},{0,0},{0,1}}, //|
             new int[][]{{0,0},{-1,0},{1,0},{0,1}}, //T
             new int[][]{{0,0},{1,0},{-1,0},{-1,1}}, //L
@@ -62,32 +62,27 @@ public class Shape {
      * Rotates the block in the left direction.
      */
     public void rotateLeft() {
-        int[][] afterRotation = new int[4][2];
-        boolean correct = true;
-        for(int i=0; i<cords.length; i++) {
-            afterRotation[i] = rotateVertex(cords[i],0);
-            if(afterRotation[i][0]*scale + x < scale ||
-                    afterRotation[i][1]*scale + y > BoardGraphics.width-2*scale) {
-                correct = false;
-                break;
-            }
-        }
-        if(correct) {
-            cords = afterRotation;
-            updatePosition();
-        }
+        rotate(0);
     }
 
     /**
      * Rotates the block in the right direction.
      */
     public void rotateRight() {
+        rotate(1);
+    }
+
+    /**
+     * Performs rotation of the block.
+     * @param d direction - 0 if left, 1 if right
+     */
+    private void rotate(int d) {
         int[][] afterRotation = new int[4][2];
         boolean correct = true;
         for(int i=0; i<cords.length; i++) {
-            afterRotation[i] = rotateVertex(cords[i],1);
+            afterRotation[i] = rotateVertex(cords[i], d);
             if(afterRotation[i][0]*scale + x < scale ||
-                    afterRotation[i][1]*scale + y > BoardGraphics.width-2*scale) {
+                    afterRotation[i][0]*scale + x > BoardGraphics.width-2*scale) {
                 correct = false;
                 break;
             }

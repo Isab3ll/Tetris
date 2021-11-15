@@ -11,7 +11,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     /**
      * Sets the game speed (bigger number equals slower game).
      */
-    static int speed = 2;
+    static int speed = 10;
 
     protected static int width;
     protected static int height;
@@ -47,7 +47,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
         Graphics2D g2D = (Graphics2D) g;
         width = getWidth();
         height = getHeight();
-        full = new boolean[22][10];
+        full = new boolean[24][10];
 
         paintBoard(g2D);
         boolean blockIsSet;
@@ -60,7 +60,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
             checkLines();
         }
         if(gameOver()) {
-            showSummary();
+            showSummary(g);
         }
     }
 
@@ -146,7 +146,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
             for(int k=0; k<shape.getPosition().length; k++) {
                 int x = shape.getPosition()[k][0];
                 int y = shape.getPosition()[k][1];
-                full[y+1][x-1] = true;
+                full[y+2][x-1] = true;
             }
         }
     }
@@ -167,6 +167,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
                 removeRow(i);
                 saveBoard();
                 points += 1;
+                speed -= 1;
             }
         }
     }
@@ -224,7 +225,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     private boolean gameOver() {
         for(int x=0; x<full[0].length; x++) {
             if(full[0][x]) {
-                System.out.println("Game Over");
+                timer.stop();
                 return true;
             }
         }
@@ -233,9 +234,22 @@ public class BoardGraphics extends JPanel implements ActionListener {
 
     /**
      * Shows summary after the game is over.
+     * @param g graphics
      */
-    private void showSummary() {
-        //todo print summary
+    private void showSummary(Graphics g) {
+        super.paintComponent(g);
+        this.setBackground(Color.BLACK);
+        Graphics2D g2D = (Graphics2D) g;
+
+        g2D.setColor(Color.RED);
+        g2D.setFont(new Font("Console", Font.PLAIN, 30));
+        g2D.drawString("GAME OVER", 90, 70);
+
+        g2D.setColor(Color.WHITE);
+        g2D.setFont(new Font("Console", Font.PLAIN, 20));
+        g2D.drawString("Your score: "+points, 120, 100);
+
+        g2D.dispose();
     }
 
     @Override

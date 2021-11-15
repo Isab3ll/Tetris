@@ -41,7 +41,7 @@ public class Shape {
 
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
         this.x = 10*scale/2;
-        this.y = scale;
+        this.y = -scale;
         updatePosition();
     }
 
@@ -129,7 +129,7 @@ public class Shape {
      * Moves the block down.
      */
     public void down() {
-        this.y = y + 10;
+        this.y = y + scale;
         updatePosition();
     }
 

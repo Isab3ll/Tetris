@@ -33,6 +33,10 @@ public class BoardGraphics extends JPanel implements ActionListener {
             case 1 -> currentShape.moveRight();
             case 2 -> currentShape.rotateLeft();
             case 3 -> currentShape.rotateRight();
+            case 4 -> {
+                if(!blockOnBlock() && !blockOnFloor())
+                    currentShape.down();
+            }
         }
     }
 
@@ -47,7 +51,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
         Graphics2D g2D = (Graphics2D) g;
         width = getWidth();
         height = getHeight();
-        full = new boolean[24][10];
+        full = new boolean[22][10];
 
         paintBoard(g2D);
         boolean blockIsSet;
@@ -146,7 +150,9 @@ public class BoardGraphics extends JPanel implements ActionListener {
             for(int k=0; k<shape.getPosition().length; k++) {
                 int x = shape.getPosition()[k][0];
                 int y = shape.getPosition()[k][1];
-                full[y+2][x-1] = true;
+                if(y>=-1) {
+                    full[y+1][x-1] = true;
+                }
             }
         }
     }
@@ -155,6 +161,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
      * Removes full lines and counts points.
      */
     public void checkLines() {
+        int combo = 0;
         for(int i=0; i<full.length; i++) {
             boolean fullRow = true;
             for(int j=0; j<full[0].length; j++) {
@@ -166,10 +173,12 @@ public class BoardGraphics extends JPanel implements ActionListener {
             if(fullRow) {
                 removeRow(i);
                 saveBoard();
-                points += 1;
+                combo++;
                 speed -= 1;
             }
         }
+        if(combo == 4) points += combo*2;
+        else points += combo;
     }
 
     /**

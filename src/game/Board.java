@@ -26,6 +26,7 @@ public class Board extends JFrame {
                     case KeyEvent.VK_RIGHT -> graphics.move(1);
                     case KeyEvent.VK_UP -> graphics.move(2);
                     case KeyEvent.VK_DOWN -> graphics.move(3);
+                    case KeyEvent.VK_SPACE -> graphics.move(4);
                 }
             }
             @Override

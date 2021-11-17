@@ -89,14 +89,17 @@ public class BoardGraphics extends JPanel implements ActionListener {
      */
     private void paintBoard(Graphics2D g2D) {
         g2D.setColor(Color.WHITE);
-        g2D.fillRect(0, height-scale+10, width*scale-10, scale);
+        g2D.fillRect(0, height-scale*2/3, width*scale*2/3, scale);
         g2D.fillRect(0, 0, scale, height*scale);
-        g2D.fillRect(width-scale+1, 0, scale, height*scale);
+        g2D.fillRect(width-scale, 0, scale, height*scale);
         paintShape(g2D, currentShape);
         for(Shape shape: onBoard) {
             paintShape(g2D, shape);
         }
-        //todo box of points
+
+        g2D.setColor(Color.RED);
+        g2D.setFont(new Font("Console", Font.PLAIN, scale*2/3));
+        g2D.drawString("Points: "+points, scale*8, scale);
     }
 
     /**
@@ -254,12 +257,12 @@ public class BoardGraphics extends JPanel implements ActionListener {
         Graphics2D g2D = (Graphics2D) g;
 
         g2D.setColor(Color.RED);
-        g2D.setFont(new Font("Console", Font.PLAIN, 30));
-        g2D.drawString("GAME OVER", 90, 150);
+        g2D.setFont(new Font("Console", Font.PLAIN, scale));
+        g2D.drawString("GAME OVER", scale*3, scale*5);
 
         g2D.setColor(Color.WHITE);
-        g2D.setFont(new Font("Console", Font.PLAIN, 20));
-        g2D.drawString("Your score: "+points, 120, 180);
+        g2D.setFont(new Font("Console", Font.PLAIN, scale*2/3));
+        g2D.drawString("Your score: "+points, scale*4, scale*6);
 
         //todo ranking
 

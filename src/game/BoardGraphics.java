@@ -16,12 +16,16 @@ public class BoardGraphics extends JPanel implements ActionListener {
     protected static int width;
     protected static int height;
 
-    Timer timer = new Timer(1, this);
-    int countdown = speed;
-    ArrayList<Shape> onBoard = new ArrayList<>();
-    static boolean[][] full;
-    Shape currentShape;
-    int points = 0;
+    private Timer timer = new Timer(1, this);
+    private int countdown = speed;
+    private static ArrayList<Shape> onBoard = new ArrayList<>();
+    private static boolean[][] full;
+    private Shape currentShape;
+    private int points = 0;
+
+    public static ArrayList<Shape> getOnBoard() {
+        return onBoard;
+    }
 
     /**
      * Moves and rotates blocks.
@@ -259,6 +263,8 @@ public class BoardGraphics extends JPanel implements ActionListener {
         g2D.setColor(Color.WHITE);
         g2D.setFont(new Font("Console", Font.PLAIN, 20));
         g2D.drawString("Your score: "+points, 120, 180);
+
+        //todo ranking
 
         g2D.dispose();
     }

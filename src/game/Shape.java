@@ -91,6 +91,11 @@ public class Shape {
             cords = afterRotation;
             updatePosition();
         }
+
+        if(!moveCorrect(this)) {
+            d = (++d)%2; //opposite direction
+            rotate(d);
+        }
     }
 
     /**
@@ -107,6 +112,10 @@ public class Shape {
             this.x = x - scale;
         }
         updatePosition();
+
+        if(!moveCorrect(this)) {
+            moveRight();
+        }
     }
 
     /**
@@ -119,10 +128,33 @@ public class Shape {
                 rightEdge = this.position[i][0]*scale ;
             }
         }
-        if(rightEdge<BoardGraphics.width-2*scale) {
+        if(rightEdge<BoardGraphics.width-3*scale) {
             this.x = x + scale;
         }
         updatePosition();
+
+        if(!moveCorrect(this)) {
+            moveLeft();
+        }
+    }
+
+    /**
+     * Checks if position of the block will be correct after movement.
+     * @param block shape after movement
+     * @return true if the move is correct
+     */
+    private boolean moveCorrect(Shape block) {
+        for(Shape shape : BoardGraphics.getOnBoard()) {
+            for(int i=0; i<block.getPosition().length; i++) {
+                for(int j=0; j<shape.getPosition().length; j++) {
+                    if (block.getPosition()[i][0] * scale == shape.getPosition()[j][0] * scale
+                            && block.getPosition()[i][1] * scale + scale == shape.getPosition()[j][1] * scale) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     /**

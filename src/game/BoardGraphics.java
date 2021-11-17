@@ -20,7 +20,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
     private int countdown = speed;
     private static ArrayList<Shape> onBoard = new ArrayList<>();
     private static boolean[][] full;
-    private Shape currentShape;
+    private static Shape currentShape;
     private int points = 0;
 
     public static ArrayList<Shape> getOnBoard() {
@@ -37,10 +37,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
             case 1 -> currentShape.moveRight();
             case 2 -> currentShape.rotateLeft();
             case 3 -> currentShape.rotateRight();
-            case 4 -> {
-                if(!blockOnBlock() && !blockOnFloor())
-                    currentShape.down();
-            }
+            case 4 -> currentShape.down();
         }
     }
 
@@ -106,7 +103,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
      * Checks if the current block is on the floor and adds new block if needed.
      * @return true if the block is on floor
      */
-    private boolean blockOnFloor() {
+    protected static boolean blockOnFloor() {
         int lowest = 0;
         for(int i=0; i<currentShape.getPosition().length; i++) {
             if(currentShape.getPosition()[i][1]*scale > lowest) {
@@ -125,7 +122,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
      * Checks if the current block is on another block and adds new block if needed.
      * @return true if the block is on another block
      */
-    private boolean blockOnBlock() {
+    protected static boolean blockOnBlock() {
         for(Shape shape : onBoard) {
             for(int i=0; i<currentShape.getPosition().length; i++) {
                 for(int j=0; j<shape.getPosition().length; j++) {

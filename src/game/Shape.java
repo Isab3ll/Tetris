@@ -161,8 +161,10 @@ public class Shape {
      * Moves the block down.
      */
     public void down() {
-        this.y = y + scale;
-        updatePosition();
+        if(!BoardGraphics.blockOnBlock() && !BoardGraphics.blockOnFloor()) {
+            this.y = y + scale;
+            updatePosition();
+        }
     }
 
     /**

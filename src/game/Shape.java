@@ -36,8 +36,6 @@ public class Shape {
     public Shape() {
         Random r = new Random();
         this.cords = types[r.nextInt(7)];
-        //this.cords = types[0]; //for debug
-
         this.color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat());
         this.x = 10*scale/2;
         this.y = -scale;

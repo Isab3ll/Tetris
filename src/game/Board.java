@@ -6,12 +6,12 @@ import java.awt.event.KeyListener;
 
 public class Board extends JFrame {
 
-    BoardGraphics graphics = new BoardGraphics();
-
-    protected static int scale = 20;
+    BoardGraphics graphics;
+    protected static int scale;
 
     public Board(int scale) {
-        this.scale = scale;
+        Board.scale = scale;
+        graphics = new BoardGraphics();
     }
 
     public void start() {

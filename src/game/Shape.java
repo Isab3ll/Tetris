@@ -125,7 +125,7 @@ public class Shape {
                 rightEdge = this.position[i][0]*scale ;
             }
         }
-        if(rightEdge<BoardGraphics.width-3*scale) {
+        if(rightEdge<BoardGraphics.width-2*scale) {
             this.x = x + scale;
         }
         updatePosition();

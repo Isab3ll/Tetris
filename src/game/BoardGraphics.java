@@ -91,7 +91,7 @@ public class BoardGraphics extends JPanel implements ActionListener {
         g2D.setColor(Color.WHITE);
         g2D.fillRect(0, height-scale*2/3, width*scale*2/3, scale);
         g2D.fillRect(0, 0, scale, height*scale);
-        g2D.fillRect(width-scale, 0, scale, height*scale);
+        g2D.fillRect(width-scale+2, 0, scale, height*scale);
         paintShape(g2D, currentShape);
         for(Shape shape: onBoard) {
             paintShape(g2D, shape);

@@ -7,10 +7,9 @@ import java.awt.event.KeyListener;
 public class Board extends JFrame {
 
     BoardGraphics graphics;
-    protected static int scale;
+    protected static final int scale = 30;
 
-    public Board(int scale) {
-        Board.scale = scale;
+    public Board() {
         graphics = new BoardGraphics();
     }
 

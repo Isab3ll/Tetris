@@ -1,2 +1,2 @@
 # Tetris
-My own version of popular tetris game
+My own version of the popular tetris game
